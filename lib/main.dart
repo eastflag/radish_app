@@ -1,6 +1,8 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:radish_app/home_screen.dart';
-import 'package:radish_app/splash_screen.dart';
+import 'package:radish_app/router/locations.dart';
+import 'package:radish_app/screens/home_screen.dart';
+import 'package:radish_app/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,10 +29,28 @@ class MyApp extends StatelessWidget {
       print("에러가 발생했습니다");
       return Text("error");
     } else if (snapshot.hasData) {
-      return HomeScreen();
+      return RadishApp();
     } else {
       return SplashScreen();
     }
   }
 }
 
+class RadishApp extends StatelessWidget {
+  RadishApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routeInformationParser: BeamerParser(),
+      routerDelegate: _routerDelegate,
+    );
+  }
+
+  final _routerDelegate = BeamerDelegate(
+      locationBuilder: BeamerLocationBuilder(
+        beamLocations: [HomeLocation()]
+      )
+  );
+}
