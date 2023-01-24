@@ -1,6 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:radish_app/router/locations.dart';
+import 'package:radish_app/screens/auth_screen.dart';
 import 'package:radish_app/screens/home_screen.dart';
 import 'package:radish_app/screens/splash_screen.dart';
 
@@ -49,8 +50,15 @@ class RadishApp extends StatelessWidget {
   }
 
   final _routerDelegate = BeamerDelegate(
-      locationBuilder: BeamerLocationBuilder(
-        beamLocations: [HomeLocation()]
-      )
+    locationBuilder: BeamerLocationBuilder(
+      beamLocations: [HomeLocation()],
+    ),
+    guards: [
+      BeamGuard(
+        pathBlueprints: ['/'],
+        check: (context, location) { return false; },
+        showPage: BeamPage(child: AuthScreen()),
+      ),
+    ]
   );
 }
