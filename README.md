@@ -1,6 +1,6 @@
 # radish_app
 
-radish clon coding
+https://blog.naver.com/rock11201/222608627800
 
 ## Getting Started
 
