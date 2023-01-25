@@ -7,16 +7,16 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.green,
-      // body: PageView(
-      //   children: [
-      //     IntroPage(),
-      //     Container(color: Colors.accents[2],),
-      //     Container(color: Colors.accents[3],),
-      //   ]
-      // ),
-      body: IntroPage(),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: PageView(
+        children: [
+          const IntroPage(),
+          Container(color: Colors.accents[3],),
+          Container(color: Colors.accents[2],),
+        ]
+      ),
+      // body: IntroPage(),
     );
   }
 
