@@ -12,7 +12,17 @@ class IntroPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           const Text("무 마켓", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.green)),
-          ExtendedImage.asset("assets/images/town.jpg"),
+          Stack(
+            children: [
+            ExtendedImage.asset("assets/images/intro.jpg"),
+            Positioned(
+              left: 100,
+              top: 100,
+              right: 100,
+              bottom: 100,
+              child: ExtendedImage.asset("assets/images/intro_arrow.png")
+            ),
+          ],),
           Text("우리 동네 중고 직거래", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 24, fontWeight: FontWeight.w500)),
           const Text("무마켓은 동네 직거래 마켓이에요.\n내 동네를 설정하고 시작해보세요.!", style: TextStyle(fontSize: 13),),
           Column(
