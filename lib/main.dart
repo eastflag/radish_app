@@ -2,7 +2,6 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:radish_app/router/locations.dart';
 import 'package:radish_app/screens/auth_screen.dart';
-import 'package:radish_app/screens/home_screen.dart';
 import 'package:radish_app/screens/splash_screen.dart';
 
 void main() {
@@ -46,6 +45,7 @@ class RadishApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routeInformationParser: BeamerParser(),
       routerDelegate: _routerDelegate,
+      theme: ThemeData(fontFamily: 'DoHyeon')
     );
   }
 
