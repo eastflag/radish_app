@@ -45,7 +45,14 @@ class RadishApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routeInformationParser: BeamerParser(),
       routerDelegate: _routerDelegate,
-      theme: ThemeData(fontFamily: 'DoHyeon')
+      theme: ThemeData(
+        fontFamily: 'DoHyeon',
+        primarySwatch: Colors.green,
+        textTheme: TextTheme(
+          headline5: TextStyle(fontFamily: 'DoHyeon'),
+          button: TextStyle(color: Colors.white)
+        )
+      )
     );
   }
 
