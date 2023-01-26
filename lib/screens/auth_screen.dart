@@ -10,17 +10,20 @@ class AuthScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: PageView(
+        controller: _pageController,
+        physics: NeverScrollableScrollPhysics(),
         children: [
-          const IntroPage(),
+          IntroPage(_pageController),
           Container(color: Colors.accents[3],),
           Container(color: Colors.accents[2],),
         ]
       ),
-      // body: IntroPage(),
     );
   }
 
-  final _controller = PageController(
+  PageController _pageController = PageController(
     initialPage: 0,
+    keepPage: true,
+    viewportFraction: 1.0
   );
 }
