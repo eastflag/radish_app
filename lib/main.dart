@@ -46,6 +46,7 @@ class RadishApp extends StatelessWidget {
       routeInformationParser: BeamerParser(),
       routerDelegate: _routerDelegate,
       theme: ThemeData(
+        hintColor: Colors.grey[350],
         fontFamily: 'DoHyeon',
         primarySwatch: Colors.green,
         textTheme: TextTheme(

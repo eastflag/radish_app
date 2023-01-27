@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'address_page.dart';
 import 'intro_page.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -14,7 +15,7 @@ class AuthScreen extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         children: [
           IntroPage(_pageController),
-          Container(color: Colors.accents[3],),
+          AddressPage(),
           Container(color: Colors.accents[2],),
         ]
       ),
