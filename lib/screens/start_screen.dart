@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:radish_app/screens/start/auth_page.dart';
 
-import 'address_page.dart';
-import 'intro_page.dart';
+import 'start/address_page.dart';
+import 'start/intro_page.dart';
 
-class AuthScreen extends StatelessWidget {
-  AuthScreen({Key? key}) : super(key: key);
+class StartScreen extends StatelessWidget {
+  StartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +13,11 @@ class AuthScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         children: [
           IntroPage(_pageController),
           AddressPage(),
-          Container(color: Colors.accents[2],),
+          AuthPage(),
         ]
       ),
     );

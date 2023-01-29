@@ -1,7 +1,7 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:radish_app/router/locations.dart';
-import 'package:radish_app/screens/auth_screen.dart';
+import 'package:radish_app/screens/start_screen.dart';
 import 'package:radish_app/screens/splash_screen.dart';
 
 void main() {
@@ -52,6 +52,11 @@ class RadishApp extends StatelessWidget {
         textTheme: TextTheme(
           headline5: TextStyle(fontFamily: 'DoHyeon'),
           button: TextStyle(color: Colors.white)
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          titleTextStyle: TextStyle(color: Colors.black87),
+          elevation: 2
         )
       )
     );
@@ -65,7 +70,7 @@ class RadishApp extends StatelessWidget {
       BeamGuard(
         pathBlueprints: ['/'],
         check: (context, location) { return false; },
-        showPage: BeamPage(child: AuthScreen()),
+        showPage: BeamPage(child: StartScreen()),
       ),
     ]
   );
