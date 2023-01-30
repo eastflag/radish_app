@@ -53,6 +53,13 @@ class RadishApp extends StatelessWidget {
           headline5: TextStyle(fontFamily: 'DoHyeon'),
           button: TextStyle(color: Colors.white)
         ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            minimumSize: Size(48, 48),
+          )
+        ),
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.white,
           titleTextStyle: TextStyle(color: Colors.black87),
