@@ -3,14 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:radish_app/constants/common_size.dart';
 
-class AuthPage extends StatelessWidget {
+class AuthPage extends StatefulWidget {
   AuthPage({Key? key}) : super(key: key);
 
+  @override
+  State<AuthPage> createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage> {
   final inputBorder = OutlineInputBorder(borderSide: BorderSide(color: Colors.grey));
+
   TextEditingController _textEditingController = TextEditingController(text: "010");
+
   TextEditingController _verifiNumberController = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  VerificationStatus _verificationStatus = VerificationStatus.none;
+
+  double getVerificationHeight(VerificationStatus status) {
+    switch(status) {
+      case VerificationStatus.none:
+        return 0;
+      case VerificationStatus.codeSent:
+      case VerificationStatus.verifying:
+      case VerificationStatus.verificationDone:
+        return 60 + common_sm_padding;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +93,12 @@ class AuthPage extends StatelessWidget {
                     onPressed: () {
                       if (_formKey.currentState != null) {
                         bool passed = _formKey.currentState!.validate();
+
+                        if (passed) {
+                          setState(() {
+                            _verificationStatus = VerificationStatus.codeSent;
+                          });
+                        }
                       }
                     },
                     child: Text("인증 문자 발송"),
@@ -80,23 +106,38 @@ class AuthPage extends StatelessWidget {
                   )
                 ]),
                 SizedBox(height: common_sm_padding,),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  controller: _verifiNumberController,
-                  inputFormatters: [MaskedInputFormatter("000000")],
-                  decoration: InputDecoration(
-                    border: inputBorder,
-                    focusedBorder: inputBorder,
+                AnimatedContainer(
+                  duration: Duration(seconds: 1),
+                  height: getVerificationHeight(_verificationStatus),
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: _verifiNumberController,
+                    inputFormatters: [MaskedInputFormatter("000000")],
+                    decoration: InputDecoration(
+                      border: inputBorder,
+                      focusedBorder: inputBorder,
+                    ),
                   ),
                 ),
-                SizedBox(height: common_sm_padding,),
-                Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("인증 하기"),
-                    style: Theme.of(context).textButtonTheme.style,
-                  )
-                ])
+                AnimatedOpacity(
+                  duration: Duration(microseconds: 300),
+                  opacity: _verificationStatus == VerificationStatus.none ? 0 : 1,
+                  child: AnimatedContainer(
+                    duration: Duration(seconds: 1),
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                      TextButton(
+                        onPressed: () {
+                          if (_formKey.currentState != null) {
+                            bool passed = _formKey.currentState!.validate();
+
+                          }
+                        },
+                        child: Text("인증 하기"),
+                        style: Theme.of(context).textButtonTheme.style,
+                      )
+                    ]),
+                  ),
+                )
               ],
             ),
           ),
@@ -104,4 +145,8 @@ class AuthPage extends StatelessWidget {
       );
     });
   }
+}
+
+enum VerificationStatus {
+  none, codeSent, verifying, verificationDone
 }
