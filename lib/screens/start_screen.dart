@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:radish_app/screens/start/auth_page.dart';
 
@@ -11,14 +12,17 @@ class StartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: PageView(
-        controller: _pageController,
-        // physics: NeverScrollableScrollPhysics(),
-        children: [
-          IntroPage(_pageController),
-          AddressPage(),
-          AuthPage(),
-        ]
+      body: ScrollConfiguration(
+        behavior: MouseDraggableScrollBehavior(),
+        child: PageView(
+          controller: _pageController,
+          // physics: NeverScrollableScrollPhysics(),
+          children: [
+            IntroPage(_pageController),
+            AddressPage(),
+            AuthPage(),
+          ]
+        ),
       ),
     );
   }
@@ -28,4 +32,12 @@ class StartScreen extends StatelessWidget {
     keepPage: true,
     viewportFraction: 1.0
   );
+}
+
+class MouseDraggableScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => <PointerDeviceKind>{
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+  };
 }
