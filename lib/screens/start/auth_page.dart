@@ -10,6 +10,8 @@ class AuthPage extends StatefulWidget {
   State<AuthPage> createState() => _AuthPageState();
 }
 
+const duration = Duration(milliseconds: 300);
+
 class _AuthPageState extends State<AuthPage> {
   final inputBorder = OutlineInputBorder(borderSide: BorderSide(color: Colors.grey));
 
@@ -29,6 +31,17 @@ class _AuthPageState extends State<AuthPage> {
       case VerificationStatus.verifying:
       case VerificationStatus.verificationDone:
         return 60 + common_sm_padding;
+    }
+  }
+
+  double getVerificationBtnHeight(VerificationStatus status) {
+    switch(status) {
+      case VerificationStatus.none:
+        return 0;
+      case VerificationStatus.codeSent:
+      case VerificationStatus.verifying:
+      case VerificationStatus.verificationDone:
+        return 48;
     }
   }
 
@@ -106,37 +119,39 @@ class _AuthPageState extends State<AuthPage> {
                   )
                 ]),
                 SizedBox(height: common_sm_padding,),
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  height: getVerificationHeight(_verificationStatus),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: _verifiNumberController,
-                    inputFormatters: [MaskedInputFormatter("000000")],
-                    decoration: InputDecoration(
-                      border: inputBorder,
-                      focusedBorder: inputBorder,
+                AnimatedOpacity(
+                  duration: duration,
+                  opacity: _verificationStatus == VerificationStatus.none ? 0 : 1,
+                  child: AnimatedContainer(
+                    duration: duration,
+                    curve: Curves.easeInOut,
+                    height: getVerificationHeight(_verificationStatus),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: _verifiNumberController,
+                      inputFormatters: [MaskedInputFormatter("000000")],
+                      decoration: InputDecoration(
+                        border: inputBorder,
+                        focusedBorder: inputBorder,
+                      ),
                     ),
                   ),
                 ),
-                AnimatedOpacity(
-                  duration: Duration(microseconds: 300),
-                  opacity: _verificationStatus == VerificationStatus.none ? 0 : 1,
-                  child: AnimatedContainer(
-                    duration: Duration(seconds: 1),
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                      TextButton(
-                        onPressed: () {
-                          if (_formKey.currentState != null) {
-                            bool passed = _formKey.currentState!.validate();
+                AnimatedContainer(
+                  duration: duration,
+                  height: getVerificationBtnHeight(_verificationStatus),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                    TextButton(
+                      onPressed: () {
+                        if (_formKey.currentState != null) {
+                          bool passed = _formKey.currentState!.validate();
 
-                          }
-                        },
-                        child: Text("인증 하기"),
-                        style: Theme.of(context).textButtonTheme.style,
-                      )
-                    ]),
-                  ),
+                        }
+                      },
+                      child: Text("인증 하기"),
+                      style: Theme.of(context).textButtonTheme.style,
+                    )
+                  ]),
                 )
               ],
             ),
