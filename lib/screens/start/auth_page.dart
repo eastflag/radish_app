@@ -1,7 +1,9 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:provider/provider.dart';
 import 'package:radish_app/constants/common_size.dart';
+import 'package:radish_app/states/user_provider.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key? key}) : super(key: key);
@@ -45,7 +47,7 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
-  void attemptVerify() async {
+  void attemptVerify(BuildContext context) async {
     setState(() {
       _verificationStatus = VerificationStatus.verifying;
     });
@@ -55,6 +57,8 @@ class _AuthPageState extends State<AuthPage> {
     setState(() {
       _verificationStatus = VerificationStatus.verificationDone;
     });
+
+    context.read<UserProvider>().setUserAuth(true);
   }
 
   @override
@@ -161,7 +165,7 @@ class _AuthPageState extends State<AuthPage> {
                     child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                       TextButton(
                         onPressed: () {
-                          attemptVerify();
+                          attemptVerify(context);
                         },
                         child: (_verificationStatus == VerificationStatus.verifying)
                             ? CircularProgressIndicator(color: Colors.white)

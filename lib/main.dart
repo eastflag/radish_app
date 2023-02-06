@@ -1,8 +1,10 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:radish_app/router/locations.dart';
 import 'package:radish_app/screens/start_screen.dart';
 import 'package:radish_app/screens/splash_screen.dart';
+import 'package:radish_app/states/user_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,14 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.delayed(Duration(seconds: 3), () => 100),
-      builder: (context, snapshot) {
-        return AnimatedSwitcher(
-          duration: const Duration(microseconds: 900),
-          child: _splashLoadingWidget(snapshot),
-        );
-      }
-    );
+        future: Future.delayed(Duration(seconds: 3), () => 100),
+        builder: (context, snapshot) {
+          return AnimatedSwitcher(
+            duration: const Duration(microseconds: 900),
+            child: _splashLoadingWidget(snapshot),
+          );
+        });
   }
 
   StatelessWidget _splashLoadingWidget(AsyncSnapshot<Object> snapshot) {
@@ -41,44 +42,45 @@ class RadishApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routeInformationParser: BeamerParser(),
-      routerDelegate: _routerDelegate,
-      theme: ThemeData(
-        hintColor: Colors.grey[350],
-        fontFamily: 'DoHyeon',
-        primarySwatch: Colors.green,
-        textTheme: TextTheme(
-          headline5: TextStyle(fontFamily: 'DoHyeon'),
-          button: TextStyle(color: Colors.white)
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
-            minimumSize: Size(48, 48),
-          )
-        ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.white,
-          titleTextStyle: TextStyle(color: Colors.black87),
-          elevation: 2
-        )
-      )
+    return ChangeNotifierProvider<UserProvider>(
+      create: (BuildContext context) {
+        return UserProvider();
+      },
+      child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routeInformationParser: BeamerParser(),
+          routerDelegate: _routerDelegate,
+          theme: ThemeData(
+              hintColor: Colors.grey[350],
+              fontFamily: 'DoHyeon',
+              primarySwatch: Colors.green,
+              textTheme: TextTheme(headline5: TextStyle(fontFamily: 'DoHyeon'), button: TextStyle(color: Colors.white)),
+              textButtonTheme: TextButtonThemeData(
+                  style: TextButton.styleFrom(
+                backgroundColor: Colors.green,
+                foregroundColor: Colors.white,
+                minimumSize: Size(48, 48),
+              )),
+              appBarTheme: AppBarTheme(
+                backgroundColor: Colors.white,
+                titleTextStyle: TextStyle(color: Colors.black87),
+                elevation: 2,
+                actionsIconTheme: IconThemeData(color: Colors.black),
+              ))),
     );
   }
 
   final _routerDelegate = BeamerDelegate(
-    locationBuilder: BeamerLocationBuilder(
-      beamLocations: [HomeLocation()],
-    ),
-    guards: [
-      BeamGuard(
-        pathBlueprints: ['/'],
-        check: (context, location) { return false; },
-        showPage: BeamPage(child: StartScreen()),
+      locationBuilder: BeamerLocationBuilder(
+        beamLocations: [HomeLocation()],
       ),
-    ]
-  );
+      guards: [
+        BeamGuard(
+          pathBlueprints: ['/'],
+          check: (context, location) {
+            return context.watch<UserProvider>().userState;
+          },
+          showPage: BeamPage(child: StartScreen()),
+        ),
+      ]);
 }

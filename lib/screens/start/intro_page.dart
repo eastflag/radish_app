@@ -1,6 +1,8 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
+import 'package:radish_app/states/user_provider.dart';
 
 var logger = Logger(
   printer: PrettyPrinter(),
@@ -13,6 +15,7 @@ class IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.d('current user state: ${context.read<UserProvider>().userState}');
     return LayoutBuilder(builder: (context, constraints) {
       Size size = MediaQuery.of(context).size; // 접속 단말기의 사이즈 인식
       logger.d('size: ' + size.width.toString() + " , " + size.height.toString());
