@@ -1,9 +1,21 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:radish_app/screens/start/address_service.dart';
 
-class AddressPage extends StatelessWidget {
+import '../../model/AddressModel.dart';
+
+class AddressPage extends StatefulWidget {
   AddressPage({Key? key}) : super(key: key);
+
+  @override
+  State<AddressPage> createState() => _AddressPageState();
+}
+
+class _AddressPageState extends State<AddressPage> {
+  TextEditingController _addressController = TextEditingController();
+
+  AddressModel? _addressModel;
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +25,13 @@ class AddressPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           TextFormField(
+            onFieldSubmitted: (text) async {
+              _addressModel = await AddressService().SearchAddressByStr(text);
+              setState(() {
+
+              });
+            },
+            controller: _addressController,
             decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search, color: Colors.grey),
                 prefixIconConstraints: BoxConstraints(minWidth: 24, minHeight: 24),
@@ -27,12 +46,17 @@ class AddressPage extends StatelessWidget {
               style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor)),
           Expanded(
             child: ListView.builder(
-                itemCount: 30,
+                itemCount: (_addressModel?.result?.items == null ? 0 : _addressModel?.result?.items?.length),
                 itemBuilder: (context, index) {
+                  if (_addressModel == null || _addressModel?.result == null || _addressModel!.result!.items == null
+                  || _addressModel!.result!.items![index].address == null) {
+                    return Container();
+                  }
+
                   return ListTile(
                     leading: ExtendedImage.asset('assets/images/carrot.jpg'),
-                    title: Text('title $index'),
-                    subtitle: Text('subtitle: $index'),
+                    title: Text(_addressModel?.result?.items?[index].address?.road ?? ""),
+                    subtitle: Text(_addressModel?.result?.items?[index].address?.parcel ?? ""),
                     trailing: Icon(Icons.more),
                   );
                 }),
