@@ -47,7 +47,7 @@ class _AddressPageState extends State<AddressPage> {
                 LocationPermission permission;
 
                 // Test if location services are enabled.
-                /*serviceEnabled = await Geolocator.isLocationServiceEnabled();
+                serviceEnabled = await Geolocator.isLocationServiceEnabled();
                 if (!serviceEnabled) {
                   // Location services are not enabled don't continue
                   // accessing the position and request users of the
@@ -79,9 +79,9 @@ class _AddressPageState extends State<AddressPage> {
                 Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                 logger.d('${position.altitude}, ${position.longitude}');
 
-                AddressService().findAddressByCoordinate(log: position.altitude, lat: position.longitude);*/
+                AddressService().findAddressByCoordinate(log: position.altitude, lat: position.longitude);
 
-                AddressService().findAddressByCoordinate(log: 37.579617, lat: 126.977041);
+                // AddressService().findAddressByCoordinate(log: 37.579617, lat: 126.977041);
               },
               icon: Icon(CupertinoIcons.compass, color: Colors.white),
               label: Text("현재 위치로 찾기", style: Theme.of(context).textTheme.button),
