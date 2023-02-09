@@ -28,20 +28,55 @@ class AddressService {
   }
 
   Future<void> findAddressByCoordinate({required double log, required double lat}) async {
-    final Map<String, dynamic> formData = {
-      // 'service': 'search',
+    final List<Map<String, dynamic>> formDatas = <Map<String, dynamic>>[];
+
+    formDatas.add({
       'key': VWORLD_KEY,
       'service': 'address',
       'request': 'GetAddress',
-      'type': 'BOTH',
+      'type': 'PARCEL',
       'point': '$log, $lat',
-    };
-
-    final response = await Dio().get('http://api.vworld.kr/req/address', queryParameters: formData).catchError((e) {
-      logger.e(e.message);
     });
 
-    logger.d(response);
+    formDatas.add({
+      'key': VWORLD_KEY,
+      'service': 'address',
+      'request': 'GetAddress',
+      'type': 'PARCEL',
+      'point': '${log + 0.01}, $lat',
+    });
+
+    formDatas.add({
+      'key': VWORLD_KEY,
+      'service': 'address',
+      'request': 'GetAddress',
+      'type': 'PARCEL',
+      'point': '${log - 0.01}, $lat',
+    });
+
+    formDatas.add({
+      'key': VWORLD_KEY,
+      'service': 'address',
+      'request': 'GetAddress',
+      'type': 'PARCEL',
+      'point': '$log, ${lat + 0.01}',
+    });
+
+    formDatas.add({
+      'key': VWORLD_KEY,
+      'service': 'address',
+      'request': 'GetAddress',
+      'type': 'PARCEL',
+      'point': '$log, ${lat - 0.01}',
+    });
+
+    for (Map<String, dynamic> formData in formDatas) {
+      final response = await Dio().get('http://api.vworld.kr/req/address', queryParameters: formData).catchError((e) {
+        logger.e(e.message);
+      });
+
+      logger.d(response);
+    }
 
     return;
   }
