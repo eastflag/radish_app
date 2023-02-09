@@ -2,8 +2,10 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:radish_app/screens/start/address_service.dart';
+import 'package:location/location.dart';
 
 import '../../model/AddressModel.dart';
+import 'intro_page.dart';
 
 class AddressPage extends StatefulWidget {
   AddressPage({Key? key}) : super(key: key);
@@ -40,7 +42,32 @@ class _AddressPageState extends State<AddressPage> {
                 hintStyle: TextStyle(color: Theme.of(context).hintColor)),
           ),
           TextButton.icon(
-              onPressed: () => {},
+              onPressed: () async {
+                Location location = Location();
+
+                bool _serviceEnabled;
+                PermissionStatus _permissionGranted;
+                LocationData _locationData;
+
+                _serviceEnabled = await location.serviceEnabled();
+                if (!_serviceEnabled) {
+                  _serviceEnabled = await location.requestService();
+                  if (!_serviceEnabled) {
+                    return;
+                  }
+                }
+
+                _permissionGranted = await location.hasPermission();
+                if (_permissionGranted == PermissionStatus.denied) {
+                  _permissionGranted = await location.requestPermission();
+                  if (_permissionGranted != PermissionStatus.granted) {
+                    return;
+                  }
+                }
+
+                _locationData = await location.getLocation();
+                logger.d(_locationData);
+              },
               icon: Icon(CupertinoIcons.compass, color: Colors.white),
               label: Text("현재 위치로 찾기", style: Theme.of(context).textTheme.button),
               style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor)),
