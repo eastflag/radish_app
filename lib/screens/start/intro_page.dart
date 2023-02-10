@@ -9,9 +9,8 @@ var logger = Logger(
 );
 
 class IntroPage extends StatelessWidget {
-  PageController controller;
 
-  IntroPage(this.controller, {Key? key}) : super(key: key);
+  IntroPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +52,9 @@ class IntroPage extends StatelessWidget {
             ),
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               TextButton(
-                onPressed: () =>
-                    {controller.animateToPage(1, duration: Duration(microseconds: 700), curve: Curves.easeOut)},
+                onPressed: () async {
+                  context.read<PageController>().animateToPage(1, duration: Duration(microseconds: 700), curve: Curves.easeOut);
+                },
                 child: Text("내 동네 설정하고 시작하기", style: Theme.of(context).textTheme.button), // 테마의 textTheme 적용
                 style: TextButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary), // 테마의 primary 적용
               )

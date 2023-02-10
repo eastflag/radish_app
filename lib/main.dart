@@ -7,6 +7,7 @@ import 'package:radish_app/screens/splash_screen.dart';
 import 'package:radish_app/states/user_provider.dart';
 
 void main() {
+  Provider.debugCheckInvalidValueType = null;
   runApp(const MyApp());
 }
 

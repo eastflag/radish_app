@@ -1,6 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:radish_app/model/AddressPointModel.dart';
 import 'package:radish_app/screens/start/address_service.dart';
 import 'package:geolocator/geolocator.dart';
@@ -120,6 +121,7 @@ class _AddressPageState extends State<AddressPage> {
                     trailing: Icon(Icons.more),
                     onTap: () {
                       _saveAddressOnSharedPreference(_addressModel?.result?.items?[index].address?.road ?? "");
+                      context.read<PageController>().animateToPage(2, duration: Duration(microseconds: 700), curve: Curves.easeOut);
                     }
                   );
                 }),
@@ -137,6 +139,7 @@ class _AddressPageState extends State<AddressPage> {
                     subtitle: Text(_addressPointModelList[index].result?[0].zipcode ?? ""),
                     onTap: () {
                       _saveAddressOnSharedPreference(_addressPointModelList[index].result?[0].text ?? "");
+                      context.read<PageController>().animateToPage(2, duration: Duration(microseconds: 700), curve: Curves.easeOut);
                     }
                   );
                 }),
