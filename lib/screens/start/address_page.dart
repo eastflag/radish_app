@@ -1,6 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:radish_app/model/AddressPointModel.dart';
 import 'package:radish_app/screens/start/address_service.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -18,6 +19,9 @@ class _AddressPageState extends State<AddressPage> {
   TextEditingController _addressController = TextEditingController();
 
   AddressModel? _addressModel;
+  List<AddressPointModel> _addressPointModelList = [];
+
+  bool _isGettingLocation = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +32,8 @@ class _AddressPageState extends State<AddressPage> {
         children: [
           TextFormField(
             onFieldSubmitted: (text) async {
+              _addressPointModelList.clear();
+
               _addressModel = await AddressService().SearchAddressByStr(text);
               setState(() {
 
@@ -43,6 +49,12 @@ class _AddressPageState extends State<AddressPage> {
           ),
           TextButton.icon(
               onPressed: () async {
+                _addressModel = null;
+                _addressPointModelList.clear();
+                setState(() {
+                  _isGettingLocation = true;
+                });
+
                 bool serviceEnabled;
                 LocationPermission permission;
 
@@ -79,12 +91,18 @@ class _AddressPageState extends State<AddressPage> {
                 Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                 logger.d('${position.altitude}, ${position.longitude}');
 
-                AddressService().findAddressByCoordinate(log: position.altitude, lat: position.longitude);
+                List<AddressPointModel> addressList = await AddressService().findAddressByCoordinate(log: position.longitude, lat: position.latitude);
 
-                // AddressService().findAddressByCoordinate(log: 37.579617, lat: 126.977041);
+                _addressPointModelList.addAll(addressList);
+
+                setState(() {
+                  _isGettingLocation = false;
+                });
+
+                // AddressService().findAddressByCoordinate(log: 126.977041, lat: 37.579617);
               },
-              icon: Icon(CupertinoIcons.compass, color: Colors.white),
-              label: Text("현재 위치로 찾기", style: Theme.of(context).textTheme.button),
+              icon: _isGettingLocation ? CircularProgressIndicator(color: Colors.white) : Icon(CupertinoIcons.compass, color: Colors.white),
+              label: Text(_isGettingLocation ? "위치 찾는중 ..." : "현재 위치로 찾기", style: Theme.of(context).textTheme.button),
               style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor)),
           Expanded(
             child: ListView.builder(

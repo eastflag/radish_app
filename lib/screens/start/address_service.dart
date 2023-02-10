@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:radish_app/constants/keys.dart';
 import 'package:radish_app/model/AddressModel.dart';
+import 'package:radish_app/model/AddressPointModel.dart';
 
 import 'intro_page.dart';
 
@@ -27,7 +28,7 @@ class AddressService {
     return addressModel;
   }
 
-  Future<void> findAddressByCoordinate({required double log, required double lat}) async {
+  Future<List<AddressPointModel>> findAddressByCoordinate({required double log, required double lat}) async {
     final List<Map<String, dynamic>> formDatas = <Map<String, dynamic>>[];
 
     formDatas.add({
@@ -35,7 +36,7 @@ class AddressService {
       'service': 'address',
       'request': 'GetAddress',
       'type': 'PARCEL',
-      'point': '$log, $lat',
+      'point': '$log,$lat',
     });
 
     formDatas.add({
@@ -43,7 +44,7 @@ class AddressService {
       'service': 'address',
       'request': 'GetAddress',
       'type': 'PARCEL',
-      'point': '${log + 0.01}, $lat',
+      'point': '${log + 0.01},$lat',
     });
 
     formDatas.add({
@@ -51,7 +52,7 @@ class AddressService {
       'service': 'address',
       'request': 'GetAddress',
       'type': 'PARCEL',
-      'point': '${log - 0.01}, $lat',
+      'point': '${log - 0.01},$lat',
     });
 
     formDatas.add({
@@ -59,7 +60,7 @@ class AddressService {
       'service': 'address',
       'request': 'GetAddress',
       'type': 'PARCEL',
-      'point': '$log, ${lat + 0.01}',
+      'point': '$log,${lat + 0.01}',
     });
 
     formDatas.add({
@@ -67,17 +68,20 @@ class AddressService {
       'service': 'address',
       'request': 'GetAddress',
       'type': 'PARCEL',
-      'point': '$log, ${lat - 0.01}',
+      'point': '$log,${lat - 0.01}',
     });
+
+    List<AddressPointModel> addressList = [];
 
     for (Map<String, dynamic> formData in formDatas) {
       final response = await Dio().get('http://api.vworld.kr/req/address', queryParameters: formData).catchError((e) {
         logger.e(e.message);
       });
 
-      logger.d(response);
+      AddressPointModel addressPointModel = AddressPointModel.fromJson(response.data["response"]);
+      addressList.add(addressPointModel);
     }
 
-    return;
+    return addressList;
   }
 }
