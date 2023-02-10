@@ -59,7 +59,7 @@ class _AddressPageState extends State<AddressPage> {
                 LocationPermission permission;
 
                 // Test if location services are enabled.
-                serviceEnabled = await Geolocator.isLocationServiceEnabled();
+                /*serviceEnabled = await Geolocator.isLocationServiceEnabled();
                 if (!serviceEnabled) {
                   // Location services are not enabled don't continue
                   // accessing the position and request users of the
@@ -91,20 +91,19 @@ class _AddressPageState extends State<AddressPage> {
                 Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                 logger.d('${position.altitude}, ${position.longitude}');
 
-                List<AddressPointModel> addressList = await AddressService().findAddressByCoordinate(log: position.longitude, lat: position.latitude);
+                List<AddressPointModel> addressList = await AddressService().findAddressByCoordinate(log: position.longitude, lat: position.latitude);*/
+                List<AddressPointModel> addressList = await AddressService().findAddressByCoordinate(log: 126.977041, lat: 37.579617);
 
                 _addressPointModelList.addAll(addressList);
 
                 setState(() {
                   _isGettingLocation = false;
                 });
-
-                // AddressService().findAddressByCoordinate(log: 126.977041, lat: 37.579617);
               },
               icon: _isGettingLocation ? CircularProgressIndicator(color: Colors.white) : Icon(CupertinoIcons.compass, color: Colors.white),
               label: Text(_isGettingLocation ? "위치 찾는중 ..." : "현재 위치로 찾기", style: Theme.of(context).textTheme.button),
               style: TextButton.styleFrom(backgroundColor: Theme.of(context).primaryColor)),
-          Expanded(
+          if (_addressModel != null) Expanded(
             child: ListView.builder(
                 itemCount: (_addressModel?.result?.items == null ? 0 : _addressModel?.result?.items?.length),
                 itemBuilder: (context, index) {
@@ -118,6 +117,20 @@ class _AddressPageState extends State<AddressPage> {
                     title: Text(_addressModel?.result?.items?[index].address?.road ?? ""),
                     subtitle: Text(_addressModel?.result?.items?[index].address?.parcel ?? ""),
                     trailing: Icon(Icons.more),
+                  );
+                }),
+          ),
+          if (_addressPointModelList.isNotEmpty) Expanded(
+            child: ListView.builder(
+                itemCount: _addressPointModelList.length,
+                itemBuilder: (context, index) {
+                  if (_addressPointModelList[index].result == null || _addressPointModelList[index].result!.isEmpty) {
+                    return Container();
+                  }
+
+                  return ListTile(
+                    title: Text(_addressPointModelList[index].result?[0].text ?? ""),
+                    subtitle: Text(_addressPointModelList[index].result?[0].zipcode ?? ""),
                   );
                 }),
           )

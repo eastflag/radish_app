@@ -5,12 +5,14 @@ class Result {
       this.crs,
       this.type,
       this.text,
+      this.zipcode,
       this.items,});
 
   Result.fromJson(dynamic json) {
     crs = json['crs'];
     type = json['type'];
     text = json['text'];
+    zipcode = json['zipcode'];
     if (json['items'] != null) {
       items = [];
       json['items'].forEach((v) {
@@ -21,6 +23,7 @@ class Result {
   String? crs;
   String? type;
   String? text;
+  String? zipcode;
   List<Items>? items;
 
   Map<String, dynamic> toJson() {
@@ -28,6 +31,7 @@ class Result {
     map['crs'] = crs;
     map['type'] = type;
     map['text'] = text;
+    map['zipcode'] = text;
     if (items != null) {
       map['items'] = items?.map((v) => v.toJson()).toList();
     }

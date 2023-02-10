@@ -79,6 +79,9 @@ class AddressService {
       });
 
       AddressPointModel addressPointModel = AddressPointModel.fromJson(response.data["response"]);
+
+      logger.d(addressPointModel.result?[0].text);
+
       addressList.add(addressPointModel);
     }
 
