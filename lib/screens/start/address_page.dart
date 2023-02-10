@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:radish_app/model/AddressPointModel.dart';
 import 'package:radish_app/screens/start/address_service.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/AddressModel.dart';
 import 'intro_page.dart';
@@ -117,6 +118,7 @@ class _AddressPageState extends State<AddressPage> {
                     title: Text(_addressModel?.result?.items?[index].address?.road ?? ""),
                     subtitle: Text(_addressModel?.result?.items?[index].address?.parcel ?? ""),
                     trailing: Icon(Icons.more),
+                    onTap: _saveAddressOnSharedPreference(_addressModel?.result?.items?[index].address?.road ?? ""),
                   );
                 }),
           ),
@@ -131,11 +133,17 @@ class _AddressPageState extends State<AddressPage> {
                   return ListTile(
                     title: Text(_addressPointModelList[index].result?[0].text ?? ""),
                     subtitle: Text(_addressPointModelList[index].result?[0].zipcode ?? ""),
+                    onTap: _saveAddressOnSharedPreference(_addressPointModelList[index].result?[0].text ?? ""),
                   );
                 }),
           )
         ],
       ),
     );
+  }
+
+  _saveAddressOnSharedPreference(String address) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setString('address', address);
   }
 }

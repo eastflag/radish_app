@@ -4,6 +4,9 @@ import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:radish_app/constants/common_size.dart';
 import 'package:radish_app/states/user_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'intro_page.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key? key}) : super(key: key);
@@ -124,6 +127,7 @@ class _AuthPageState extends State<AuthPage> {
                   Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                     TextButton(
                       onPressed: () {
+                        _getAddress();
                         if (_formKey.currentState != null) {
                           bool passed = _formKey.currentState!.validate();
 
@@ -181,6 +185,12 @@ class _AuthPageState extends State<AuthPage> {
         ),
       );
     });
+  }
+
+  _getAddress() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String address = preferences.getString("address") ?? "";
+    logger.d("address from shared Pref - $address");
   }
 }
 
