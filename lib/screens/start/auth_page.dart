@@ -87,105 +87,110 @@ class _AuthPageState extends State<AuthPage> {
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 elevation: Theme.of(context).appBarTheme.elevation),
-            body: Padding(
-              padding: EdgeInsets.all(common_bg_padding),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      ExtendedImage.asset(
-                        'assets/images/security.png',
-                        width: size.width * 0.25,
-                        height: size.width * 0.25,
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Expanded(
-                        child: Text(
-                          '무마켓은 전화번호로 가입합니다. 여러분의 개인정보는 안전히 보관되며 외부에 노출되지 않습니다.',
-                          style: Theme.of(context).textTheme.subtitle1,
+            body: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: Padding(
+                padding: EdgeInsets.all(common_bg_padding),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        ExtendedImage.asset(
+                          'assets/images/security.png',
+                          width: size.width * 0.25,
+                          height: size.width * 0.25,
                         ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: common_sm_padding,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.phone,
-                    controller: _textEditingController,
-                    inputFormatters: [MaskedInputFormatter("000-0000-0000")],
-                    decoration: InputDecoration(
-                      border: inputBorder,
-                      focusedBorder: inputBorder,
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        Expanded(
+                          child: Text(
+                            '무마켓은 전화번호로 가입합니다. 여러분의 개인정보는 안전히 보관되며 외부에 노출되지 않습니다.',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        )
+                      ],
                     ),
-                    validator: (phoneNumber) {
-                      if (phoneNumber != null && phoneNumber.length == 13) {
-                        return null;
-                      } else {
-                        return '올바른 전화번호를 입력하세요.';
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: common_sm_padding,
-                  ),
-                  Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                    TextButton(
-                      onPressed: () {
-                        _getAddress();
-                        if (_formKey.currentState != null) {
-                          bool passed = _formKey.currentState!.validate();
-
-                          if (passed) {
-                            setState(() {
-                              _verificationStatus = VerificationStatus.codeSent;
-                            });
-                          }
+                    SizedBox(
+                      height: common_sm_padding,
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.phone,
+                      controller: _textEditingController,
+                      inputFormatters: [MaskedInputFormatter("000-0000-0000")],
+                      decoration: InputDecoration(
+                        border: inputBorder,
+                        focusedBorder: inputBorder,
+                      ),
+                      validator: (phoneNumber) {
+                        if (phoneNumber != null && phoneNumber.length == 13) {
+                          return null;
+                        } else {
+                          return '올바른 전화번호를 입력하세요.';
                         }
                       },
-                      child: Text("인증 문자 발송"),
-                      style: Theme.of(context).textButtonTheme.style,
-                    )
-                  ]),
-                  SizedBox(
-                    height: common_sm_padding,
-                  ),
-                  AnimatedOpacity(
-                    duration: duration,
-                    opacity: _verificationStatus == VerificationStatus.none ? 0 : 1,
-                    child: AnimatedContainer(
-                      duration: duration,
-                      curve: Curves.easeInOut,
-                      height: getVerificationHeight(_verificationStatus),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: _verifiNumberController,
-                        inputFormatters: [MaskedInputFormatter("000000")],
-                        decoration: InputDecoration(
-                          border: inputBorder,
-                          focusedBorder: inputBorder,
-                        ),
-                      ),
                     ),
-                  ),
-                  AnimatedContainer(
-                    duration: duration,
-                    height: getVerificationBtnHeight(_verificationStatus),
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                    SizedBox(
+                      height: common_sm_padding,
+                    ),
+                    Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                       TextButton(
                         onPressed: () {
-                          attemptVerify(context);
+                          _getAddress();
+                          if (_formKey.currentState != null) {
+                            bool passed = _formKey.currentState!.validate();
+
+                            if (passed) {
+                              setState(() {
+                                _verificationStatus = VerificationStatus.codeSent;
+                              });
+                            }
+                          }
                         },
-                        child: (_verificationStatus == VerificationStatus.verifying)
-                            ? CircularProgressIndicator(color: Colors.white)
-                            : Text("인증 하기"),
+                        child: Text("인증 문자 발송"),
                         style: Theme.of(context).textButtonTheme.style,
                       )
                     ]),
-                  )
-                ],
+                    SizedBox(
+                      height: common_sm_padding,
+                    ),
+                    AnimatedOpacity(
+                      duration: duration,
+                      opacity: _verificationStatus == VerificationStatus.none ? 0 : 1,
+                      child: AnimatedContainer(
+                        duration: duration,
+                        curve: Curves.easeInOut,
+                        height: getVerificationHeight(_verificationStatus),
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: _verifiNumberController,
+                          inputFormatters: [MaskedInputFormatter("000000")],
+                          decoration: InputDecoration(
+                            border: inputBorder,
+                            focusedBorder: inputBorder,
+                          ),
+                        ),
+                      ),
+                    ),
+                    AnimatedContainer(
+                      duration: duration,
+                      height: getVerificationBtnHeight(_verificationStatus),
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                        TextButton(
+                          onPressed: () {
+                            attemptVerify(context);
+                          },
+                          child: (_verificationStatus == VerificationStatus.verifying)
+                              ? CircularProgressIndicator(color: Colors.white)
+                              : Text("인증 하기"),
+                          style: Theme.of(context).textButtonTheme.style,
+                        )
+                      ]),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
