@@ -118,7 +118,9 @@ class _AddressPageState extends State<AddressPage> {
                     title: Text(_addressModel?.result?.items?[index].address?.road ?? ""),
                     subtitle: Text(_addressModel?.result?.items?[index].address?.parcel ?? ""),
                     trailing: Icon(Icons.more),
-                    onTap: _saveAddressOnSharedPreference(_addressModel?.result?.items?[index].address?.road ?? ""),
+                    onTap: () {
+                      _saveAddressOnSharedPreference(_addressModel?.result?.items?[index].address?.road ?? "");
+                    }
                   );
                 }),
           ),
@@ -133,7 +135,9 @@ class _AddressPageState extends State<AddressPage> {
                   return ListTile(
                     title: Text(_addressPointModelList[index].result?[0].text ?? ""),
                     subtitle: Text(_addressPointModelList[index].result?[0].zipcode ?? ""),
-                    onTap: _saveAddressOnSharedPreference(_addressPointModelList[index].result?[0].text ?? ""),
+                    onTap: () {
+                      _saveAddressOnSharedPreference(_addressPointModelList[index].result?[0].text ?? "");
+                    }
                   );
                 }),
           )
