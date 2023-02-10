@@ -59,7 +59,7 @@ class _AddressPageState extends State<AddressPage> {
                 LocationPermission permission;
 
                 // Test if location services are enabled.
-                /*serviceEnabled = await Geolocator.isLocationServiceEnabled();
+                serviceEnabled = await Geolocator.isLocationServiceEnabled();
                 if (!serviceEnabled) {
                   // Location services are not enabled don't continue
                   // accessing the position and request users of the
@@ -91,8 +91,8 @@ class _AddressPageState extends State<AddressPage> {
                 Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                 logger.d('${position.altitude}, ${position.longitude}');
 
-                List<AddressPointModel> addressList = await AddressService().findAddressByCoordinate(log: position.longitude, lat: position.latitude);*/
-                List<AddressPointModel> addressList = await AddressService().findAddressByCoordinate(log: 126.977041, lat: 37.579617);
+                List<AddressPointModel> addressList = await AddressService().findAddressByCoordinate(log: position.longitude, lat: position.latitude);
+                // List<AddressPointModel> addressList = await AddressService().findAddressByCoordinate(log: 126.977041, lat: 37.579617);
 
                 _addressPointModelList.addAll(addressList);
 
