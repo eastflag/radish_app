@@ -65,6 +65,13 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   @override
+  void dispose() {
+    _textEditingController.dispose();
+    _verifiNumberController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       Size size = MediaQuery.of(context).size;

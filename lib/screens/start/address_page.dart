@@ -26,6 +26,12 @@ class _AddressPageState extends State<AddressPage> {
   bool _isGettingLocation = false;
 
   @override
+  void dispose() {
+    _addressController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       minimum: EdgeInsets.all(16.0),
