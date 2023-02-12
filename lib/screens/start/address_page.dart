@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:radish_app/model/AddressPointModel.dart';
 import 'package:radish_app/screens/start/address_service.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:radish_app/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/AddressModel.dart';
-import 'intro_page.dart';
 
 class AddressPage extends StatefulWidget {
   AddressPage({Key? key}) : super(key: key);

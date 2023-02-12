@@ -1,12 +1,8 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:radish_app/states/user_provider.dart';
-
-var logger = Logger(
-  printer: PrettyPrinter(),
-);
+import 'package:radish_app/utils/logger.dart';
 
 class IntroPage extends StatelessWidget {
 

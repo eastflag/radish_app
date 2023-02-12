@@ -7,6 +7,8 @@ import 'start/address_page.dart';
 import 'start/intro_page.dart';
 
 class StartScreen extends StatelessWidget {
+  PageController _pageController = PageController();
+
   StartScreen({Key? key}) : super(key: key);
 
   @override
@@ -30,12 +32,6 @@ class StartScreen extends StatelessWidget {
       ),
     );
   }
-
-  PageController _pageController = PageController(
-    initialPage: 0,
-    keepPage: true,
-    viewportFraction: 1.0
-  );
 }
 
 class MouseDraggableScrollBehavior extends MaterialScrollBehavior {

@@ -2,8 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:radish_app/constants/keys.dart';
 import 'package:radish_app/model/AddressModel.dart';
 import 'package:radish_app/model/AddressPointModel.dart';
-
-import 'intro_page.dart';
+import 'package:radish_app/utils/logger.dart';
 
 class AddressService {
   Future<AddressModel> SearchAddressByStr(String text) async {

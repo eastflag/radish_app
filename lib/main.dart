@@ -6,6 +6,22 @@ import 'package:radish_app/screens/start_screen.dart';
 import 'package:radish_app/screens/splash_screen.dart';
 import 'package:radish_app/states/user_provider.dart';
 
+// 비머 전역 선언
+final _routerDelegate = BeamerDelegate(
+  guards: [
+    BeamGuard(
+      pathBlueprints: ['/'],
+      check: (context, location) {
+        return context.watch<UserProvider>().userState;
+      },
+      showPage: BeamPage(child: StartScreen()),
+    ),
+  ],
+  locationBuilder: BeamerLocationBuilder(
+    beamLocations: [HomeLocation()],
+  ),
+);
+
 void main() {
   Provider.debugCheckInvalidValueType = null;
   runApp(const MyApp());
@@ -71,17 +87,5 @@ class RadishApp extends StatelessWidget {
     );
   }
 
-  final _routerDelegate = BeamerDelegate(
-      locationBuilder: BeamerLocationBuilder(
-        beamLocations: [HomeLocation()],
-      ),
-      guards: [
-        BeamGuard(
-          pathBlueprints: ['/'],
-          check: (context, location) {
-            return context.watch<UserProvider>().userState;
-          },
-          showPage: BeamPage(child: StartScreen()),
-        ),
-      ]);
+
 }
