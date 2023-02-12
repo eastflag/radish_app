@@ -68,24 +68,27 @@ class RadishApp extends StatelessWidget {
           routeInformationParser: BeamerParser(),
           routerDelegate: _routerDelegate,
           theme: ThemeData(
-              hintColor: Colors.grey[350],
-              fontFamily: 'DoHyeon',
-              primarySwatch: Colors.green,
-              textTheme: TextTheme(headline5: TextStyle(fontFamily: 'DoHyeon'), button: TextStyle(color: Colors.white)),
-              textButtonTheme: TextButtonThemeData(
-                  style: TextButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
-                minimumSize: Size(48, 48),
-              )),
-              appBarTheme: AppBarTheme(
-                backgroundColor: Colors.white,
-                titleTextStyle: TextStyle(color: Colors.black87, fontSize: 18, fontWeight: FontWeight.w700),
-                elevation: 2,
-                actionsIconTheme: IconThemeData(color: Colors.black),
-              ))),
+            hintColor: Colors.grey[350],
+            fontFamily: 'DoHyeon',
+            primarySwatch: Colors.green,
+            textTheme: TextTheme(headline5: TextStyle(fontFamily: 'DoHyeon'), button: TextStyle(color: Colors.white)),
+            textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              minimumSize: Size(48, 48),
+            )),
+            appBarTheme: AppBarTheme(
+              backgroundColor: Colors.white,
+              titleTextStyle: TextStyle(color: Colors.black87, fontSize: 18, fontWeight: FontWeight.w700),
+              elevation: 2,
+              actionsIconTheme: IconThemeData(color: Colors.black),
+            ),
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              selectedItemColor: Colors.black87,
+              unselectedItemColor: Colors.black38,
+            ),
+          )),
     );
   }
-
-
 }

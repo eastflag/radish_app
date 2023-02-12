@@ -22,6 +22,14 @@ class HomeScreen extends StatelessWidget {
           }, icon: Icon(Icons.notifications))
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.ten_k), label: "#"),
+          BottomNavigationBarItem(icon: Icon(Icons.ten_k), label: "내근처"),
+          BottomNavigationBarItem(icon: Icon(Icons.ten_k), label: "채팅"),
+          BottomNavigationBarItem(icon: Icon(Icons.ten_k), label: "내정보"),
+        ],
+      ),
     );
   }
 }
