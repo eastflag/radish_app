@@ -9,11 +9,17 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("홈스크림"),
+        title: Text("홈스크림", style: Theme.of(context).appBarTheme.titleTextStyle,),
         actions: [
           IconButton(onPressed: (){
-            context.read<UserProvider>().setUserAuth(false);
-          }, icon: Icon(Icons.logout))
+
+          }, icon: Icon(Icons.search)),
+          IconButton(onPressed: (){
+
+          }, icon: Icon(Icons.list)),
+          IconButton(onPressed: (){
+
+          }, icon: Icon(Icons.notifications))
         ],
       ),
     );
