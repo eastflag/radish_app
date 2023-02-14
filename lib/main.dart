@@ -71,7 +71,12 @@ class RadishApp extends StatelessWidget {
             hintColor: Colors.grey[350],
             fontFamily: 'DoHyeon',
             primarySwatch: Colors.green,
-            textTheme: TextTheme(headline5: TextStyle(fontFamily: 'DoHyeon'), button: TextStyle(color: Colors.white)),
+            textTheme: TextTheme(
+                headline5: TextStyle(fontFamily: 'DoHyeon'),
+                subtitle1: TextStyle(fontSize: 17, color: Colors.black87),
+                subtitle2: TextStyle(fontSize: 13, color: Colors.black38),
+                button: TextStyle(color: Colors.white)
+            ),
             textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
               backgroundColor: Colors.green,
