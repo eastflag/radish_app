@@ -17,27 +17,12 @@ class StartScreen extends StatelessWidget {
       value: _pageController,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: ScrollConfiguration(
-          behavior: MouseDraggableScrollBehavior(),
-          child: PageView(
-            controller: _pageController,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              IntroPage(),
-              AddressPage(),
-              AuthPage(),
-            ]
-          ),
-        ),
+        body: PageView(controller: _pageController, physics: NeverScrollableScrollPhysics(), children: [
+          IntroPage(),
+          AddressPage(),
+          AuthPage(),
+        ]),
       ),
     );
   }
-}
-
-class MouseDraggableScrollBehavior extends MaterialScrollBehavior {
-  @override
-  Set<PointerDeviceKind> get dragDevices => <PointerDeviceKind>{
-    PointerDeviceKind.touch,
-    PointerDeviceKind.mouse,
-  };
 }
