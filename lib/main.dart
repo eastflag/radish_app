@@ -5,6 +5,8 @@ import 'package:radish_app/router/locations.dart';
 import 'package:radish_app/screens/start_screen.dart';
 import 'package:radish_app/screens/splash_screen.dart';
 import 'package:radish_app/states/user_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 // 비머 전역 선언
 final _routerDelegate = BeamerDelegate(
@@ -22,7 +24,11 @@ final _routerDelegate = BeamerDelegate(
   ),
 );
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   Provider.debugCheckInvalidValueType = null;
   runApp(const MyApp());
 }
