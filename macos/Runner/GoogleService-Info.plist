@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>322960719879-p78rg52pdrp35tt83vhg6u6gpsk2jtqr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.322960719879-p78rg52pdrp35tt83vhg6u6gpsk2jtqr</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDoqVJRi_rCPtUMQ1OcUoG8iy0kBkX8LSk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>322960719879</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ldk.radishApp</string>
+	<key>PROJECT_ID</key>
+	<string>radish-app-d22bd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>radish-app-d22bd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:322960719879:ios:13e77a7beae8b196106aa2</string>
+</dict>
+</plist>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "322960719879",
+    "project_id": "radish-app-d22bd",
+    "storage_bucket": "radish-app-d22bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322960719879:android:597401b9f456f9be106aa2",
+        "android_client_info": {
+          "package_name": "com.ldk.radish_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322960719879-fu9nk3qtboqql1lliv4oelcartuof1bc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5fiSsONctmjgrUS_rPz5JwOqWOhApefs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322960719879-fu9nk3qtboqql1lliv4oelcartuof1bc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
