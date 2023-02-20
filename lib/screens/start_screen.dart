@@ -1,8 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:radish_app/screens/start/auth_page.dart';
-
 import 'start/address_page.dart';
 import 'start/intro_page.dart';
 
@@ -17,11 +15,14 @@ class StartScreen extends StatelessWidget {
       value: _pageController,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: PageView(controller: _pageController, physics: NeverScrollableScrollPhysics(), children: [
-          IntroPage(),
-          AddressPage(),
-          AuthPage(),
-        ]),
+        body: PageView(
+            controller: _pageController,
+            // physics: NeverScrollableScrollPhysics(),
+            children: [
+              IntroPage(),
+              AddressPage(),
+              AuthPage(),
+            ]),
       ),
     );
   }
