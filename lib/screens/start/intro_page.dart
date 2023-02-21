@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:radish_app/states/user_provider.dart';
@@ -29,13 +28,13 @@ class IntroPage extends StatelessWidget {
               height: imgOne,
               child: Stack(
                 children: [
-                  ExtendedImage.asset("assets/images/intro.jpg"),
+                  Image.asset("assets/images/intro.jpg"),
                   Positioned(
                       width: imgTwo,
                       height: imgTwo,
                       left: imgOne * 0.45,
                       top: imgOne * 0.45,
-                      child: ExtendedImage.asset("assets/images/intro_arrow.png")),
+                      child: Image.asset("assets/images/intro_arrow.png")),
                 ],
               ),
             ),

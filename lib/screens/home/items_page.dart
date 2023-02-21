@@ -1,4 +1,4 @@
-import 'package:extended_image/extended_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:radish_app/constants/common_size.dart';
@@ -34,10 +34,10 @@ class ItemsPage extends StatelessWidget {
                   SizedBox(
                       height: imgSize,
                       width: imgSize,
-                      child: ExtendedImage.network(
-                        'https://picsum.photos/100',
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(12),
+                      child: CachedNetworkImage(
+                        imageUrl: 'https://picsum.photos/100',
+                        placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
                       )),
                   SizedBox(
                     width: common_bg_padding,

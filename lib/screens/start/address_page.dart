@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -125,7 +124,7 @@ class _AddressPageState extends State<AddressPage> {
                     }
 
                     return ListTile(
-                      leading: ExtendedImage.asset('assets/images/carrot.jpg'),
+                      leading: Image.asset('assets/images/carrot.jpg'),
                       title: Text(_addressModel?.result?.items?[index].address?.road ?? ""),
                       subtitle: Text(_addressModel?.result?.items?[index].address?.parcel ?? ""),
                       trailing: Icon(Icons.more),

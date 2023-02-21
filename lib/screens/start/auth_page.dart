@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:provider/provider.dart';
@@ -96,7 +95,7 @@ class _AuthPageState extends State<AuthPage> {
                   children: [
                     Row(
                       children: [
-                        ExtendedImage.asset(
+                        Image.asset(
                           'assets/images/security.png',
                           width: size.width * 0.25,
                           height: size.width * 0.25,
