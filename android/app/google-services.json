@@ -29,6 +29,13 @@
             {
               "client_id": "322960719879-fu9nk3qtboqql1lliv4oelcartuof1bc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "322960719879-p78rg52pdrp35tt83vhg6u6gpsk2jtqr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ldk.radishApp"
+              }
             }
           ]
         }
