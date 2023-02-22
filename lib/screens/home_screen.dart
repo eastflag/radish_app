@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:radish_app/states/user_provider.dart';
@@ -23,7 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+          IconButton(onPressed: () {
+            // test code
+            FirebaseAuth.instance.signOut();
+          }, icon: Icon(Icons.search)),
           IconButton(onPressed: () {}, icon: Icon(Icons.list)),
           IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
         ],
