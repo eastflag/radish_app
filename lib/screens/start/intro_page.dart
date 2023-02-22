@@ -9,7 +9,7 @@ class IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.d('current user state: ${context.read<UserProvider>().userState}');
+    logger.d('current user state: ${context.read<UserProvider>().user}');
     return LayoutBuilder(builder: (context, constraints) {
       Size size = MediaQuery.of(context).size; // 접속 단말기의 사이즈 인식
       logger.d('size: ' + size.width.toString() + " , " + size.height.toString());

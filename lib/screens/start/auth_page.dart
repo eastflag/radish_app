@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:provider/provider.dart';
@@ -58,8 +59,6 @@ class _AuthPageState extends State<AuthPage> {
     setState(() {
       _verificationStatus = VerificationStatus.verificationDone;
     });
-
-    context.read<UserProvider>().setUserAuth(true);
   }
 
   @override
@@ -135,15 +134,31 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                       TextButton(
-                        onPressed: () {
+                        onPressed: () async {
                           _getAddress();
                           if (_formKey.currentState != null) {
                             bool passed = _formKey.currentState!.validate();
 
                             if (passed) {
-                              setState(() {
-                                _verificationStatus = VerificationStatus.codeSent;
-                              });
+                              // setState(() {
+                              //   _verificationStatus = VerificationStatus.codeSent;
+                              // });
+                              FirebaseAuth auth = FirebaseAuth.instance;
+                              await auth.verifyPhoneNumber(
+                                phoneNumber: '+821077777777',
+                                verificationCompleted: (PhoneAuthCredential credential) async {
+                                  await auth.signInWithCredential(credential);
+                                },
+                                verificationFailed: (FirebaseAuthException error) {
+                                  logger.d(error.message);
+                                },
+                                codeSent: (String verificationId, int? forceResendingToken) {
+                                  setState(() {
+                                    _verificationStatus = VerificationStatus.codeSent;
+                                  });
+                                },
+                                codeAutoRetrievalTimeout: (String verificationId) {  },
+                              );
                             }
                           }
                         },
