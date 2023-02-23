@@ -44,23 +44,24 @@ class _AuthPageState extends State<AuthPage> {
       Size size = MediaQuery.of(context).size;
 
       return IgnorePointer(
-        ignoring: _verificationStatus == VerificationStatus.verifying,
+        ignoring: _verificationStatus == VerificationStatus.verifying, // true  이면 자신과 하위가 invisible(눌러도 변화없음)
         child: Form(
           key: _formKey,
           child: Scaffold(
             appBar: AppBar(
                 title: Text(
                   '로그인 하기',
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 elevation: Theme.of(context).appBarTheme.elevation),
-            body: GestureDetector(
+            body: InkWell(
               onTap: () {
-                FocusScope.of(context).unfocus();
+                FocusScope.of(context).unfocus(); // 화면 터치시 키보드 unfocus 만들기
               },
               child: Padding(
                 padding: EdgeInsets.all(common_bg_padding),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
                       children: [
@@ -102,67 +103,67 @@ class _AuthPageState extends State<AuthPage> {
                     SizedBox(
                       height: common_sm_padding,
                     ),
-                    Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                      TextButton(
-                        onPressed: () async {
-                          if (_verificationStatus == VerificationStatus.codeSending) {
-                            return;
+                    TextButton(
+                      onPressed: () async {
+                        if (_verificationStatus == VerificationStatus.codeSending) {
+                          return;
+                        }
+                        // _getAddress();
+                        if (_formKey.currentState != null) {
+                          bool passed = _formKey.currentState!.validate();
+
+                          if (passed) {
+                            String phoneNum = _phoneNumberController.text;
+                            phoneNum = phoneNum.replaceAll(' ', '');
+                            phoneNum = phoneNum.replaceFirst('0', '');
+
+                            FirebaseAuth auth = FirebaseAuth.instance;
+
+                            setState(() {
+                              _verificationStatus = VerificationStatus.codeSending;
+                            });
+
+                            await auth.verifyPhoneNumber(
+                              phoneNumber: '+82$phoneNum',
+                              forceResendingToken: _forceResendingToken,
+                              codeSent: (String verificationId, int? forceResendingToken) async {
+                                setState(() {
+                                  _verificationStatus = VerificationStatus.codeSent;
+                                });
+
+                                _verificationId = verificationId;
+                                _forceResendingToken = forceResendingToken;
+                              },
+                              codeAutoRetrievalTimeout: (String verificationId) {},
+                              verificationCompleted: (PhoneAuthCredential credential) async {
+                                logger.d('인증완료 ${credential}');
+                                await auth.signInWithCredential(credential);
+                              },
+                              verificationFailed: (FirebaseAuthException error) {
+                                setState(() {
+                                  _verificationStatus = VerificationStatus.none;
+                                });
+                                logger.d(error.message);
+                              },
+                            );
                           }
-                          // _getAddress();
-                          if (_formKey.currentState != null) {
-                            bool passed = _formKey.currentState!.validate();
-
-                            if (passed) {
-                              String phoneNum = _phoneNumberController.text;
-                              phoneNum = phoneNum.replaceAll(' ', '');
-                              phoneNum = phoneNum.replaceFirst('0', '');
-
-                              FirebaseAuth auth = FirebaseAuth.instance;
-
-                              setState(() {
-                                _verificationStatus = VerificationStatus.codeSending;
-                              });
-
-                              await auth.verifyPhoneNumber(
-                                phoneNumber: '+82$phoneNum',
-                                forceResendingToken: _forceResendingToken,
-                                codeSent: (String verificationId, int? resendToken) async {
-                                  setState(() {
-                                    _verificationStatus = VerificationStatus.codeSent;
-                                  });
-
-                                  _verificationId = verificationId;
-                                },
-                                codeAutoRetrievalTimeout: (String verificationId) {},
-                                verificationCompleted: (PhoneAuthCredential credential) async {
-                                  await auth.signInWithCredential(credential);
-                                },
-                                verificationFailed: (FirebaseAuthException error) {
-                                  setState(() {
-                                    _verificationStatus = VerificationStatus.none;
-                                  });
-                                  logger.d(error.message);
-                                },
-                              );
-                            }
-                          }
-                        },
-                        child: _verificationStatus == VerificationStatus.codeSending
-                            ? SizedBox(
-                                height: 26,
-                                width: 26,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Text("인증 문자 발송"),
-                        style: Theme.of(context).textButtonTheme.style,
-                      )
-                    ]),
+                        }
+                      },
+                      child: _verificationStatus == VerificationStatus.codeSending
+                          ? SizedBox(
+                              height: 26,
+                              width: 26,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            )
+                          : Text("인증 문자 발송"),
+                      style: Theme.of(context).textButtonTheme.style,
+                    ),
                     SizedBox(
                       height: common_sm_padding,
                     ),
-                    AnimatedOpacity(
+                    AnimatedOpacity( // none 이면 안보였다가 none 이 아니면 천천히 보이게 하기
                       duration: duration,
                       opacity: _verificationStatus == VerificationStatus.none ? 0 : 1,
                       child: AnimatedContainer(
@@ -183,17 +184,15 @@ class _AuthPageState extends State<AuthPage> {
                     AnimatedContainer(
                       duration: duration,
                       height: getVerificationBtnHeight(_verificationStatus),
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                        TextButton(
-                          onPressed: () {
-                            attemptVerify(context);
-                          },
-                          child: (_verificationStatus == VerificationStatus.verifying)
-                              ? CircularProgressIndicator(color: Colors.white)
-                              : Text("인증 하기"),
-                          style: Theme.of(context).textButtonTheme.style,
-                        )
-                      ]),
+                      child: TextButton(
+                        onPressed: () {
+                          attemptVerify(context);
+                        },
+                        child: (_verificationStatus == VerificationStatus.verifying)
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : Text("인증 하기"),
+                        style: Theme.of(context).textButtonTheme.style,
+                      ),
                     )
                   ],
                 ),
