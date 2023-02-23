@@ -27,15 +27,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return linux;
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -79,5 +73,25 @@ class DefaultFirebaseOptions {
     storageBucket: 'radish-app-d22bd.appspot.com',
     iosClientId: '322960719879-p78rg52pdrp35tt83vhg6u6gpsk2jtqr.apps.googleusercontent.com',
     iosBundleId: 'com.ldk.radishApp',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBEO1DSzYkbujpnPl-fsTEtcit8CIm4AXo',
+    appId: '1:322960719879:web:39c12757e887bdf9106aa2',
+    messagingSenderId: '322960719879',
+    projectId: 'radish-app-d22bd',
+    authDomain: 'radish-app-d22bd.firebaseapp.com',
+    storageBucket: 'radish-app-d22bd.appspot.com',
+    measurementId: 'G-TFZXQ4KTY8',
+  );
+
+  static const FirebaseOptions linux = FirebaseOptions(
+    apiKey: 'AIzaSyBEO1DSzYkbujpnPl-fsTEtcit8CIm4AXo',
+    appId: '1:322960719879:web:e848e610e5d1b1e5106aa2',
+    messagingSenderId: '322960719879',
+    projectId: 'radish-app-d22bd',
+    authDomain: 'radish-app-d22bd.firebaseapp.com',
+    storageBucket: 'radish-app-d22bd.appspot.com',
+    measurementId: 'G-NS8RBQ14TJ',
   );
 }
