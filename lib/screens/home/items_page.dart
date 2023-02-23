@@ -21,7 +21,7 @@ class ItemsPage extends StatelessWidget {
         builder: (context, snapshot) {
           return AnimatedSwitcher(
             duration: Duration(milliseconds: 600),
-            child: (snapshot.connectionState != ConnectionState.done) ? _shimmerListView(imgSize) : _listView(imgSize);
+            child: (snapshot.connectionState != ConnectionState.done) ? _shimmerListView(imgSize) : _listView(imgSize)
           );
         }
       );
