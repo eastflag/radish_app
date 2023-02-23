@@ -51,7 +51,7 @@ class _AuthPageState extends State<AuthPage> {
             appBar: AppBar(
                 title: Text(
                   '로그인 하기',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 elevation: Theme.of(context).appBarTheme.elevation),
             body: InkWell(
