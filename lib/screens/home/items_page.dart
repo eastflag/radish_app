@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:radish_app/constants/common_size.dart';
+import 'package:radish_app/repo/user_service.dart';
 import 'package:radish_app/screens/start/auth_page.dart';
 import 'package:radish_app/utils/logger.dart';
 import 'package:shimmer/shimmer.dart';
@@ -42,75 +43,80 @@ class ItemsPage extends StatelessWidget {
         padding: EdgeInsets.all(common_sm_padding),
         itemCount: 50,
         itemBuilder: (context, index) {
-          return SizedBox(
-            height: imgSize,
-            child: Row(
-              children: [
-                SizedBox(
-                    height: imgSize,
-                    width: imgSize,
-                    child: CachedNetworkImage(
-                      imageUrl: 'https://picsum.photos/100',
-                      placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                    )),
-                SizedBox(
-                  width: common_bg_padding,
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "그래픽 카드 RTX3060",
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "1시간전",
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("15,000원"),
-                      Expanded(child: Container()),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            height: 15,
-                            child: FittedBox(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    CupertinoIcons.chat_bubble_2,
-                                    color: Colors.grey,
-                                  ),
-                                  Text(
-                                    "31",
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  Icon(
-                                    CupertinoIcons.heart,
-                                    color: Colors.grey,
-                                  ),
-                                  Text(
-                                    "31",
-                                    style: TextStyle(color: Colors.grey),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
+          return InkWell(
+            onTap: () {
+              UserService().fireStoreWriteTest();
+            },
+            child: SizedBox(
+              height: imgSize,
+              child: Row(
+                children: [
+                  SizedBox(
+                      height: imgSize,
+                      width: imgSize,
+                      child: CachedNetworkImage(
+                        imageUrl: 'https://picsum.photos/100',
+                        placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                      )),
+                  SizedBox(
+                    width: common_bg_padding,
                   ),
-                )
-              ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "그래픽 카드 RTX3060",
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "1시간전",
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("15,000원"),
+                        Expanded(child: Container()),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              height: 15,
+                              child: FittedBox(
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      CupertinoIcons.chat_bubble_2,
+                                      color: Colors.grey,
+                                    ),
+                                    Text(
+                                      "31",
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
+                                    Icon(
+                                      CupertinoIcons.heart,
+                                      color: Colors.grey,
+                                    ),
+                                    Text(
+                                      "31",
+                                      style: TextStyle(color: Colors.grey),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         });
