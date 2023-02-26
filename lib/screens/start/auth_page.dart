@@ -7,6 +7,8 @@ import 'package:radish_app/states/user_provider.dart';
 import 'package:radish_app/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constants/shared_pref_keys.dart';
+
 class AuthPage extends StatefulWidget {
   AuthPage({Key? key}) : super(key: key);
 
@@ -206,7 +208,9 @@ class _AuthPageState extends State<AuthPage> {
 
   _getAddress() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String address = preferences.getString("address") ?? "";
+    String address = preferences.getString(SHARED_ADDRESS) ?? "";
+    double lat = preferences.getDouble(SHARED_LAT) ?? 0;
+    double lon = preferences.getDouble(SHARED_LON) ?? 0;
     logger.d("address from shared Pref - $address");
   }
 

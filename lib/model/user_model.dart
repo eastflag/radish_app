@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geoflutterfire2/geoflutterfire2.dart';
 
 class UserModel {
   late String userKey;
@@ -6,7 +7,7 @@ class UserModel {
   late String address;
   late num lat;
   late num lon;
-  late GeoPoint geoPoint;
+  late GeoFirePoint geoFirePoint;
   late DateTime createdDate;
   DocumentReference? reference;
 
@@ -16,20 +17,18 @@ class UserModel {
     required this.address,
     required this.lat,
     required this.lon,
-    required this.geoPoint,
+    required this.geoFirePoint,
     required this.createdDate,
     this.reference
   });
 
-  UserModel.fromJson(dynamic json) {
-    userKey = json['userKey'];
+  UserModel.fromJson(dynamic json, this.userKey, this.reference) {
     phoneNumber = json['phoneNumber'];
     address = json['address'];
     lat = json['lat'];
     lon = json['lon'];
-    geoPoint = json['geoPoint'];
-    createdDate = json['createdDate'];
-    reference = json['reference'];
+    geoFirePoint = GeoFirePoint(json['geoFirePoint']['geopoint'].latitude, json['geoFirePoint']['geopoint'].longitude);
+    createdDate = json['createdDate'] == null ? DateTime.now().toUtc() : (json['createdDate'] as Timestamp).toDate();
   }
 
   Map<String, dynamic> toJson() {
@@ -38,7 +37,7 @@ class UserModel {
     map['address'] = address;
     map['lat'] = lat;
     map['lon'] = lon;
-    map['geoPoint'] = geoPoint;
+    map['geoPoint'] = geoFirePoint.data;
     map['createdDate'] = createdDate;
     return map;
   }

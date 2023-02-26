@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:radish_app/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constants/shared_pref_keys.dart';
 import '../../model/AddressModel.dart';
 
 class AddressPage extends StatefulWidget {
@@ -129,8 +130,10 @@ class _AddressPageState extends State<AddressPage> {
                       subtitle: Text(_addressModel?.result?.items?[index].address?.parcel ?? ""),
                       trailing: Icon(Icons.more),
                       onTap: () {
-                        _saveAddressOnSharedPreference(_addressModel?.result?.items?[index].address?.road ?? "");
-                        context.read<PageController>().animateToPage(2, duration: Duration(microseconds: 700), curve: Curves.easeOut);
+                        _saveAddressAndGoToNextPage(_addressModel?.result?.items?[index].address?.road ?? ""
+                          , num.parse(_addressModel!.result!.items![index].point!.y ?? "0")
+                          , num.parse(_addressModel!.result!.items![index].point!.x ?? "0")
+                        );
                       }
                     );
                   }),
@@ -147,8 +150,10 @@ class _AddressPageState extends State<AddressPage> {
                       title: Text(_addressPointModelList[index].result?[0].text ?? ""),
                       subtitle: Text(_addressPointModelList[index].result?[0].zipcode ?? ""),
                       onTap: () {
-                        _saveAddressOnSharedPreference(_addressPointModelList[index].result?[0].text ?? "");
-                        context.read<PageController>().animateToPage(2, duration: Duration(microseconds: 700), curve: Curves.easeOut);
+                        _saveAddressAndGoToNextPage(_addressModel?.result?.items?[index].address?.road ?? ""
+                            , num.parse(_addressModel!.result!.items![index].point!.y ?? "0")
+                            , num.parse(_addressModel!.result!.items![index].point!.x ?? "0")
+                        );
                       }
                     );
                   }),
@@ -159,8 +164,15 @@ class _AddressPageState extends State<AddressPage> {
     );
   }
 
-  _saveAddressOnSharedPreference(String address) async {
+  _saveAddressAndGoToNextPage(String address, num lat, num lon) async {
+    await _saveAddressOnSharedPreference(address, lat, lon);
+    context.read<PageController>().animateToPage(2, duration: Duration(microseconds: 700), curve: Curves.easeInOut);
+  }
+
+  _saveAddressOnSharedPreference(String address, num lat, num lon) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.setString('address', address);
+    await preferences.setString(SHARED_ADDRESS, address);
+    await preferences.setDouble(SHARED_LAT, lat.toDouble());
+    await preferences.setDouble(SHARED_LON, lon.toDouble());
   }
 }
