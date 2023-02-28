@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:radish_app/states/user_provider.dart';
+import 'package:radish_app/widget/expandablefab.dart';
 
 import 'home/items_page.dart';
 
@@ -66,6 +67,25 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: ImageIcon(
                   AssetImage(_bottomSelectedIndex == 3 ? 'assets/icons/icon_info_select.png' : 'assets/icons/icon_info_normal.png')),
               label: "내정보"),
+        ],
+      ),
+      floatingActionButton: ExpandableFab(
+        distance: 90,
+        children: [
+          MaterialButton(
+            onPressed: (){},
+            shape: CircleBorder(),
+            height: 40,
+            color: Theme.of(context).colorScheme.primary,
+            child: Icon(Icons.add),
+          ),
+          MaterialButton(
+            onPressed: (){},
+            shape: CircleBorder(),
+            height: 40,
+            color: Theme.of(context).colorScheme.primary,
+            child: Icon(Icons.add),
+          )
         ],
       ),
     );
