@@ -22,6 +22,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   User? _user;
+  UserModel? _userModel;
 
   User? get user => _user;
 
@@ -52,7 +53,8 @@ class UserProvider extends ChangeNotifier {
           geoFirePoint: GeoFirePoint(lat, lon),
           createdDate: DateTime.now().toUtc());
 
-      await UserService().createNewUser(userModel.toJson(), userKey);
+      _userModel = await UserService().createNewUser(userModel.toJson(), userKey);
+      logger.d(_userModel!.toJson().toString());
     }
   }
 }
