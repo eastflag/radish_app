@@ -14,13 +14,14 @@ final _routerDelegate = BeamerDelegate(
     BeamGuard(
       pathBlueprints: ['/'],
       check: (context, location) {
-        return context.watch<UserProvider>().user != null;
+        // return context.watch<UserProvider>().user != null;
+        return true;
       },
       showPage: BeamPage(child: StartScreen()),
     ),
   ],
   locationBuilder: BeamerLocationBuilder(
-    beamLocations: [HomeLocation()],
+    beamLocations: [HomeLocation(), InputLocation()],
   ),
 );
 
@@ -99,6 +100,7 @@ class RadishApp extends StatelessWidget {
             )),
             appBarTheme: AppBarTheme(
               backgroundColor: Colors.white,
+              foregroundColor: Colors.black87,
               titleTextStyle: TextStyle(color: Colors.black87, fontSize: 18, fontWeight: FontWeight.w700),
               elevation: 2,
               actionsIconTheme: IconThemeData(color: Colors.black),
