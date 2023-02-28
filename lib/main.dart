@@ -90,7 +90,8 @@ class RadishApp extends StatelessWidget {
                 headline5: TextStyle(fontFamily: 'DoHyeon'),
                 subtitle1: TextStyle(fontSize: 17, color: Colors.black87),
                 subtitle2: TextStyle(fontSize: 13, color: Colors.black38),
-                button: TextStyle(color: Colors.white)
+                button: TextStyle(color: Colors.white),
+                bodyText2: TextStyle(color: Colors.black87, fontSize: 13, fontWeight: FontWeight.w300),
             ),
             textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
