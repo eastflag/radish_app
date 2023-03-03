@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +28,8 @@ final _routerDelegate = BeamerDelegate(
 );
 
 void main() async {
+  HttpOverrides.global = MyHttpOverrides();
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -112,5 +116,13 @@ class RadishApp extends StatelessWidget {
             ),
           )),
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
