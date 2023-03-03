@@ -1,5 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:radish_app/constants/common_size.dart';
 
 import 'multi_image_select.dart';
 
@@ -44,6 +45,13 @@ class _InputScreenState extends State<InputScreen> {
       body: ListView(
         children: [
           MultiImageSelect(),
+          Divider(
+            height: 1,
+            color: Colors.grey,
+            thickness: 1,
+            indent: common_bg_padding,
+            endIndent: common_bg_padding,
+          )
         ],
       ),
     );
