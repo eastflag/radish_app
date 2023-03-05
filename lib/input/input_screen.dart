@@ -64,7 +64,10 @@ class _InputScreenState extends State<InputScreen> {
             ),
           ),
           _divider,
-          const ListTile(
+          ListTile(
+            onTap: () {
+              context.beamToNamed('/input/category_input');
+            },
             dense: true,
             title: Text('카테고리 선택'),
             trailing: Icon(Icons.navigate_next),
