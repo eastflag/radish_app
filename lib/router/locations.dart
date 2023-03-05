@@ -1,9 +1,11 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 import 'package:radish_app/input/category_input_screen.dart';
 import 'package:radish_app/input/input_screen.dart';
 import 'package:radish_app/screens/home_screen.dart';
+import 'package:radish_app/states/category_notifier.dart';
 
 class HomeLocation extends BeamLocation {
   @override
@@ -16,6 +18,14 @@ class HomeLocation extends BeamLocation {
 }
 
 class InputLocation extends BeamLocation {
+  @override
+  Widget builder(BuildContext context, Widget navigator) {
+    return ChangeNotifierProvider.value(
+      value: categoryNotifier,
+      child: super.builder(context, navigator)
+    );
+  }
+
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     return [
