@@ -20,9 +20,11 @@ class HomeLocation extends BeamLocation {
 class InputLocation extends BeamLocation {
   @override
   Widget builder(BuildContext context, Widget navigator) {
-    return ChangeNotifierProvider.value(
-      value: categoryNotifier,
-      child: super.builder(context, navigator)
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: categoryNotifier),
+      ],
+      child: super.builder(context, navigator),
     );
   }
 
