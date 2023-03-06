@@ -14,7 +14,8 @@ class MultiImageSelect extends StatefulWidget {
 }
 
 class _MultiImageSelectState extends State<MultiImageSelect> {
-  List<XFile>? _images = [];
+  List<Uint8List>? _images = [];
+  bool _isPickingImages = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +34,18 @@ class _MultiImageSelectState extends State<MultiImageSelect> {
                 padding: EdgeInsets.all(common_sm_padding),
                 child: InkWell(
                   onTap: () async{
+                    _isPickingImages = true;
+
                     final ImagePicker _picker = ImagePicker();
                     // final List<XFile>? images = await _picker.pickMultiImage();
-                    List<XFile>? images = await _picker.pickMultiImage();
+                    List<XFile>? images = await _picker.pickMultiImage(imageQuality: 10);
                     if (images != null && images.isNotEmpty) {
                       _images!.clear();
-                      _images!.addAll(images);
+                      images.forEach((xfile) async{
+                        _images!.add(await xfile.readAsBytes());
+                      });
+
+                      _isPickingImages = false;
                       setState(() {
 
                       });
@@ -47,7 +54,7 @@ class _MultiImageSelectState extends State<MultiImageSelect> {
                   child: Container(
                     width: imgSize,
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.grey, width: 2)),
-                    child: Column(
+                    child: _isPickingImages ? Padding(padding: EdgeInsets.all(5.0), child: CircularProgressIndicator()) : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.camera_alt_rounded, color: Colors.grey),
@@ -64,13 +71,12 @@ class _MultiImageSelectState extends State<MultiImageSelect> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: common_sm_padding, bottom: common_sm_padding, right: common_sm_padding),
-                    child: FutureBuilder<Uint8List>(
-                      future: _images![index].readAsBytes(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Image.memory(
-                            snapshot.data!,
-                            fit: BoxFit.cover,
+                    child: Image.memory(
+                      _images![index],
+                      height: imgSize,
+                      width: imgSize,
+                      fit: BoxFit.cover,
+
                             // loadStateChanged: (state) {
                             //   switch (state.extendedImageLoadState) {
                             //     case LoadState.loading:
@@ -86,23 +92,30 @@ class _MultiImageSelectState extends State<MultiImageSelect> {
                             //       return Icon(Icons.cancel);
                             //   }
                             // },
-                          );
-                        } else {
-                          return Container(
-                            height: imgSize,
-                            width: imgSize,
-                            child: CircularProgressIndicator())
-                          ;
-                        }
-                      },
+                        // } else {
+                        //   return Container(
+                        //     height: imgSize,
+                        //     width: imgSize,
+                        //     child: CircularProgressIndicator())
+                        //   ;
+                        // }
                     ),
                   ),
                   Positioned(
-                      top: 0,
-                      right: 0,
-                      width: 40,
-                      height: 40,
-                      child: IconButton(onPressed: () {}, icon: Icon(Icons.remove_circle, color: Colors.red[400])))
+                    top: 0,
+                    right: 0,
+                    width: 40,
+                    height: 40,
+                    child: IconButton(
+                      onPressed: () {
+                        _images!.removeAt(index);
+                        setState(() {
+
+                        });
+                      },
+                      icon: Icon(Icons.remove_circle, size: 30, color: Colors.red[400])
+                    )
+                  )
                 ],
               ))
             ],
