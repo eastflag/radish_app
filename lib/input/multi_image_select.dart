@@ -2,7 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:radish_app/constants/common_size.dart';
+import 'package:radish_app/states/select_image_notifier.dart';
 
 class MultiImageSelect extends StatefulWidget {
   const MultiImageSelect({
@@ -14,13 +16,13 @@ class MultiImageSelect extends StatefulWidget {
 }
 
 class _MultiImageSelectState extends State<MultiImageSelect> {
-  List<Uint8List>? _images = [];
   bool _isPickingImages = false;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        SelectImageNotifier selectImageNotifier = context.watch()<SelectImageNotifier>();
         Size _size = MediaQuery.of(context).size;
         var imgSize = _size.width / 3;
 
@@ -40,10 +42,7 @@ class _MultiImageSelectState extends State<MultiImageSelect> {
                     // final List<XFile>? images = await _picker.pickMultiImage();
                     List<XFile>? images = await _picker.pickMultiImage(imageQuality: 10);
                     if (images != null && images.isNotEmpty) {
-                      _images!.clear();
-                      images.forEach((xfile) async{
-                        _images!.add(await xfile.readAsBytes());
-                      });
+                      await context.read<SelectImageNotifier>().setNewImage(images);
 
                       _isPickingImages = false;
                       setState(() {
@@ -67,12 +66,12 @@ class _MultiImageSelectState extends State<MultiImageSelect> {
                   ),
                 ),
               ),
-              ...List.generate(_images!.length, (index) => Stack(
+              ...List.generate(selectImageNotifier.images.length, (index) => Stack(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: common_sm_padding, bottom: common_sm_padding, right: common_sm_padding),
                     child: Image.memory(
-                      _images![index],
+                      selectImageNotifier.images[index],
                       height: imgSize,
                       width: imgSize,
                       fit: BoxFit.cover,
@@ -108,7 +107,7 @@ class _MultiImageSelectState extends State<MultiImageSelect> {
                     height: 40,
                     child: IconButton(
                       onPressed: () {
-                        _images!.removeAt(index);
+                        selectImageNotifier.removeImage(index);
                         setState(() {
 
                         });
