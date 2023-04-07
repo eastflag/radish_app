@@ -6,6 +6,7 @@ import 'package:radish_app/input/category_input_screen.dart';
 import 'package:radish_app/input/input_screen.dart';
 import 'package:radish_app/screens/home_screen.dart';
 import 'package:radish_app/states/category_notifier.dart';
+import 'package:radish_app/states/select_image_notifier.dart';
 
 class HomeLocation extends BeamLocation {
   @override
@@ -23,6 +24,7 @@ class InputLocation extends BeamLocation {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: categoryNotifier),
+        ChangeNotifierProvider(create: (context) => SelectImageNotifier())
       ],
       child: super.builder(context, navigator),
     );
