@@ -22,7 +22,7 @@ class _MultiImageSelectState extends State<MultiImageSelect> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        SelectImageNotifier selectImageNotifier = context.watch()<SelectImageNotifier>();
+        SelectImageNotifier selectImageNotifier = context.watch<SelectImageNotifier>();
         Size _size = MediaQuery.of(context).size;
         var imgSize = _size.width / 3;
 
