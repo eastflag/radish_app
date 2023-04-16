@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:radish_app/router/locations.dart';
 import 'package:radish_app/screens/start_screen.dart';
 import 'package:radish_app/screens/splash_screen.dart';
-import 'package:radish_app/states/user_provider.dart';
+import 'package:radish_app/states/user_notifier.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -16,8 +16,8 @@ final _routerDelegate = BeamerDelegate(
     BeamGuard(
       pathBlueprints: ['/'],
       check: (context, location) {
-        // return context.watch<UserProvider>().user != null;
-        return true;
+        return context.watch<UserNotifier>().user != null;
+        // return true;
       },
       showPage: BeamPage(child: StartScreen()),
     ),
@@ -78,9 +78,9 @@ class RadishApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<UserProvider>(
+    return ChangeNotifierProvider<UserNotifier>(
       create: (BuildContext context) {
-        return UserProvider();
+        return UserNotifier();
       },
       child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

@@ -2,7 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:radish_app/states/user_provider.dart';
+import 'package:radish_app/states/user_notifier.dart';
 import 'package:radish_app/widget/expandablefab.dart';
 
 import 'home/items_page.dart';

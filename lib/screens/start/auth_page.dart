@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:radish_app/constants/common_size.dart';
-import 'package:radish_app/states/user_provider.dart';
+import 'package:radish_app/states/user_notifier.dart';
 import 'package:radish_app/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

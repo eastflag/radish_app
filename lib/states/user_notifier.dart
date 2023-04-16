@@ -7,17 +7,8 @@ import 'package:radish_app/repo/user_service.dart';
 import 'package:radish_app/utils/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserProvider extends ChangeNotifier {
-  // bool _userLoggedIn = false;
-  //
-  // void setUserAuth(bool authState) {
-  //   _userLoggedIn = authState;
-  //   notifyListeners();
-  // }
-  //
-  // bool get userState => _userLoggedIn;
-
-  UserProvider() {
+class UserNotifier extends ChangeNotifier {
+  UserNotifier() {
     initUser();
   }
 
@@ -25,6 +16,7 @@ class UserProvider extends ChangeNotifier {
   UserModel? _userModel;
 
   User? get user => _user;
+  UserModel? get userModel => _userModel;
 
   void initUser() {
     FirebaseAuth.instance.authStateChanges().listen((user) {
@@ -48,12 +40,11 @@ class UserProvider extends ChangeNotifier {
           userKey: "",
           phoneNumber: phoneNumber,
           address: address,
-          lat: lat,
-          lon: lon,
           geoFirePoint: GeoFirePoint(lat, lon),
           createdDate: DateTime.now().toUtc());
 
-      _userModel = await UserService().createNewUser(userModel.toJson(), userKey);
+      await UserService().createNewUser(userModel.toJson(), userKey);
+      _userModel = await UserService().getUserModel(userKey);
       logger.d(_userModel!.toJson().toString());
     }
   }
