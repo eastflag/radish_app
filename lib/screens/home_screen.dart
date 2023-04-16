@@ -27,8 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(onPressed: () {
-            // test code
             FirebaseAuth.instance.signOut();
+            context.beamToNamed("/");
           }, icon: Icon(Icons.search)),
           IconButton(onPressed: () {}, icon: Icon(Icons.list)),
           IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
